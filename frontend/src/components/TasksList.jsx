@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useTasksContext } from '../context/TasksContext';
-import { CATEGORIES } from '../utils/constants';
+import { CATEGORIES } from '../constants/categories.js';
 import { AnimatePresence, motion } from 'framer-motion';
+import TasksListItem from './TasksListItem';
 import Spinner from './Spinner';
-import Task from './Task';
 
 const TasksList = () => {
   const { activeCategory, isLoading, error, allTasks } = useTasksContext();
@@ -49,7 +49,7 @@ const TasksList = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <Task position={tasks.length - i} task={task} />
+            <TasksListItem position={tasks.length - i} task={task} />
           </motion.div>
         ))}
       </AnimatePresence>

@@ -1,5 +1,5 @@
 import { useReducer, useState, useEffect } from 'react';
-import { tasksReducer } from './../utils/tasksReducer.js';
+import { tasksReducer } from './../reducers/tasksReducer.js';
 
 const useTasks = url => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +26,7 @@ const useTasks = url => {
         setIsLoading(false);
         setError(err.message);
 
-        throw new Error(err.message);
+        throw err;
       }
     };
 

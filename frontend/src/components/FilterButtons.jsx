@@ -1,40 +1,40 @@
 import { useTasksContext } from '../context/TasksContext';
-import { CATEGORIES } from '../utils/constants';
-import FilterButton from './FilterButton';
+import { CATEGORIES } from '../constants/categories.js';
+import FilterButtonsItem from './FilterButtonsItem';
 
 const FilterButtons = () => {
   const { activeCategory, setActiveCategory } = useTasksContext();
 
   return (
     <div>
-      <FilterButton
+      <FilterButtonsItem
         id={CATEGORIES.LATEST}
         activeCategory={activeCategory}
         handleCategory={e => setActiveCategory(e.target.id)}
       >
         Latest
-      </FilterButton>
-      <FilterButton
+      </FilterButtonsItem>
+      <FilterButtonsItem
         id={CATEGORIES.PRIOR}
         activeCategory={activeCategory}
         handleCategory={e => setActiveCategory(e.target.id)}
       >
         Prior
-      </FilterButton>
-      <FilterButton
+      </FilterButtonsItem>
+      <FilterButtonsItem
         id={CATEGORIES.TODO}
         activeCategory={activeCategory}
         handleCategory={e => setActiveCategory(e.target.id)}
       >
         To Do
-      </FilterButton>
-      <FilterButton
+      </FilterButtonsItem>
+      <FilterButtonsItem
         id={CATEGORIES.DONE}
         activeCategory={activeCategory}
         handleCategory={e => setActiveCategory(e.target.id)}
       >
         Done
-      </FilterButton>
+      </FilterButtonsItem>
     </div>
   );
 };

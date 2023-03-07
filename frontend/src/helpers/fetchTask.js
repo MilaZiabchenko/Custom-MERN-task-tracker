@@ -6,10 +6,8 @@ export const fetchTask = async id => {
       throw new Error(`Oops, ${response.status}: ${response.statusText}`);
     }
 
-    const data = response.json();
-
-    return data;
+    return response.json();
   } catch (err) {
-    throw new Error(err.message);
+    throw err;
   }
 };

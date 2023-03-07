@@ -5,16 +5,28 @@ export const tasksReducer = (tasks, action) => {
     }
 
     case 'updated_task': {
-      return tasks.map(task =>
+      const updatedTasks = tasks.map(task =>
         task._id === action.payload._id
           ? {
               ...task,
               name: action.payload.name,
               time: action.payload.time,
-              priority: action.payload.priority,
+              priority: action.payload.priority
             }
           : task
       );
+
+      const editedTaskIndex = tasks.findIndex(
+        task => task._id === action.payload._id
+      );
+
+      return editedTaskIndex === 0
+        ? updatedTasks
+        : [
+            updatedTasks.at(editedTaskIndex),
+            ...updatedTasks.slice(0, editedTaskIndex),
+            ...updatedTasks.slice(editedTaskIndex + 1)
+          ];
     }
 
     case 'toggled_completed': {

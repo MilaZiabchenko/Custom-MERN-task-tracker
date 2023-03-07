@@ -4,7 +4,7 @@ import { FaEdit } from 'react-icons/fa';
 import { FaTrashAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-const Task = ({ position, task }) => {
+const TasksListItem = ({ position, task }) => {
   const { editTask, toggleCompleted, deleteTask } = useTasksContext();
 
   const taskTitle = `#${position} — ${task.name}`;
@@ -37,14 +37,14 @@ const Task = ({ position, task }) => {
   );
 };
 
-Task.propTypes = {
+TasksListItem.propTypes = {
   position: PropTypes.number,
   task: PropTypes.shape({
     name: PropTypes.string,
     time: PropTypes.string,
     priority: PropTypes.number,
-    completed: PropTypes.bool,
-  }),
+    completed: PropTypes.bool
+  })
 };
 
-export default Task;
+export default TasksListItem;

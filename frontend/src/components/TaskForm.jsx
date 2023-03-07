@@ -45,7 +45,7 @@ const AddTaskForm = () => {
   };
 
   return (
-    showAddTask && (
+    showAddTask ? (
       <form onSubmit={handleSubmit}>
         <div className='form-control'>
           <textarea
@@ -90,7 +90,7 @@ const AddTaskForm = () => {
           Save Task
         </button>
       </form>
-    )
+    ) : null
   );
 };
 

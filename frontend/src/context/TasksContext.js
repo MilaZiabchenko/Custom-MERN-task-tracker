@@ -3,14 +3,14 @@ import {
   useContext,
   useReducer,
   useState,
-  useEffect,
+  useEffect
 } from 'react';
 import useTasks from '../hooks/useTasks.js';
-import { CATEGORIES } from '../utils/constants.js';
-import { tasksReducer } from '../utils/tasksReducer.js';
-import { fetchTask } from '../utils/fetchTask.js';
+import { CATEGORIES } from '../constants/categories.js';
+import { tasksReducer } from '../reducers/tasksReducer.js';
+import { fetchTask } from '../helpers/fetchTask.js';
 
-const TasksContext = createContext();
+const TasksContext = createContext(null);
 
 const TasksProvider = ({ children }) => {
   const [activeCategory, setActiveCategory] = useState(CATEGORIES.LATEST);
@@ -29,17 +29,24 @@ const TasksProvider = ({ children }) => {
   const [showAddTask, setShowAddTask] = useState(false);
 
   const editTask = async id => {
-    const taskToEdit = await fetchTask(id);
+    if (showAddTask === false) {
+      const taskToEdit = await fetchTask(id);
 
-    setTaskToEdit({ task: taskToEdit, edit: true });
-    setShowAddTask(!showAddTask);
+      setTaskToEdit({ task: taskToEdit, edit: true });
+
+      setShowAddTask(!showAddTask);
+
+      const element = document.querySelector('main');
+
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const updateTask = async (id, updatedTask) => {
     const response = await fetch(`/api/tasks/${id}`, {
       method: 'PUT',
       headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify(updatedTask),
+      body: JSON.stringify(updatedTask)
     });
 
     if (!response.ok) {
@@ -50,7 +57,7 @@ const TasksProvider = ({ children }) => {
 
     dispatch({
       type: 'updated_task',
-      payload: data,
+      payload: data
     });
 
     setTaskToEdit({ task: {}, edit: false });
@@ -65,9 +72,9 @@ const TasksProvider = ({ children }) => {
     const response = await fetch(`/api/tasks/${id}`, {
       method: 'PATCH',
       headers: {
-        'Content-type': 'application/json',
+        'Content-type': 'application/json'
       },
-      body: JSON.stringify(updatedTask),
+      body: JSON.stringify(updatedTask)
     });
 
     if (!response.ok) {
@@ -78,7 +85,7 @@ const TasksProvider = ({ children }) => {
 
     dispatch({
       type: 'toggled_completed',
-      payload: data,
+      payload: data
     });
   };
 
@@ -88,7 +95,7 @@ const TasksProvider = ({ children }) => {
 
   const deleteTask = async id => {
     await fetch(`/api/tasks/${id}`, {
-      method: 'DELETE',
+      method: 'DELETE'
     });
 
     dispatch({ type: 'deleted_task', _id: id });
@@ -98,7 +105,7 @@ const TasksProvider = ({ children }) => {
     const response = await fetch('/api/tasks', {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify(task),
+      body: JSON.stringify(task)
     });
 
     if (!response.ok) {
@@ -126,7 +133,7 @@ const TasksProvider = ({ children }) => {
         toggleCompleted,
         toggleAddTask,
         deleteTask,
-        addTask,
+        addTask
       }}
     >
       {children}
